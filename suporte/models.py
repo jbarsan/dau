@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
-from perfis.models import User
+# from perfis.models import User
 
 
 # Create your models here.
@@ -22,7 +22,7 @@ class Equipamento(models.Model):
 
 
 class Departamento(models.Model):
-    codigo = models.PositiveIntegerField(primary_key=true, verbose_name='Código')
+    codigo = models.PositiveIntegerField(primary_key=True, verbose_name='Código')
     descricao = models.CharField(_('Descrição'), max_length=100)
 
     class Meta:
@@ -49,17 +49,43 @@ class Entrada(models.Model):
     problemas = models.TextField(_('Problemas'), blank=True, null=True)
     servicos = models.TextField(_('Serviços'), blank=True, null=True)
     observacoes = models.TextField(_('Observações'), blank=True, null=True)
-    data = models.DateField(_('Data'))
-    status = models.CharField(_('Status'), choices=STATUS_CHOICE)
+    data = models.DateTimeField(_('Data'))
+    status = models.CharField(_('Status'), max_length=2, choices=STATUS_CHOICE)
 
     class Meta:
-        db_table = 'Equipamento'
-        verbose_name = 'Equipamento'
-        verbose_name_plural = 'Equipamentos'
+        db_table = 'Entrada'
+        verbose_name = 'Entrada'
+        verbose_name_plural = 'Entrada'
 
     def __str__(self):
         return '{}'.format(self.id)
 
 
 class Atendimento(models.Model):
-    pass
+    entrada = models.ForeignKey('Entrada', models.DO_NOTHING, verbose_name='Entrada')
+    tecnico = models.ForeignKey(settings.AUTH_USER_MODEL, models.DO_NOTHING, verbose_name='Técnico')
+    data_inicio = models.DateTimeField(_('Data de inicio'))
+    data_fim = models.DateTimeField(_('Data de encerramento'), blank=True, null=True)
+    resumo = models.TextField(_('Resumo'), blank=True, null=True)
+
+    class Meta:
+        db_table = 'Atendimento'
+        verbose_name = 'Atendimento'
+        verbose_name_plural = 'Atendimentos'
+
+    def __str__(self):
+        return '{} ({})'.format(self.entrada.id, self.resumo)
+
+
+class Saida(models.Model):
+    entrada = models.ForeignKey('Entrada', models.DO_NOTHING, verbose_name='Entrada')
+    tecnico = models.ForeignKey(settings.AUTH_USER_MODEL, models.DO_NOTHING, verbose_name='Técnico')
+    data = models.DateTimeField(_('Data de Saída'))
+
+    class Meta:
+        db_table = 'Saida'
+        verbose_name = 'Saída'
+        verbose_name_plural = 'Saídas'
+
+    def __str__(self):
+        return '{}, ({}), ({})'.format(self.entrada.id, self.entrada.status, self.data)
