@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+
+
 # from perfis.models import User
 
 
@@ -31,7 +33,7 @@ class Departamento(models.Model):
         verbose_name_plural = 'Departamentos'
 
     def __str__(self):
-        return '{} {}'.format(self.codigo, self.descricao)
+        return '{} - {}'.format(self.codigo, self.descricao)
 
 
 class Entrada(models.Model):
@@ -44,7 +46,8 @@ class Entrada(models.Model):
     equipamento = models.ForeignKey('Equipamento', models.DO_NOTHING, verbose_name='Equipamento')
     recebido_por = models.ForeignKey(settings.AUTH_USER_MODEL, models.DO_NOTHING, verbose_name='Recebido por')
     encaminhado_por = models.ForeignKey('Departamento', models.DO_NOTHING, verbose_name='Encaminhado por')
-    responsavel = models.CharField(_('Responsável'), max_length=250)
+    setor_responsavel = models.ForeignKey('Departamento', models.DO_NOTHING, verbose_name='Setor responsável',
+                                          related_name='setor_responsavel')
     contatos = models.TextField(_('Contatos'))
     problemas = models.TextField(_('Problemas'), blank=True, null=True)
     servicos = models.TextField(_('Serviços'), blank=True, null=True)
@@ -55,10 +58,10 @@ class Entrada(models.Model):
     class Meta:
         db_table = 'Entrada'
         verbose_name = 'Entrada'
-        verbose_name_plural = 'Entrada'
+        verbose_name_plural = 'Entradas'
 
     def __str__(self):
-        return '{}'.format(self.id)
+        return '{0} ({1} {2}, {3})'.format(self.id, self.equipamento.descricao, self.equipamento.marca, self.problemas)
 
 
 class Atendimento(models.Model):
