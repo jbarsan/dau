@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Departamentos</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <table class="table">
+        <thead class="thead-inverse bg-dark text-white">
+        <tr>
+            <th>Código</th>
+            <th>Descrição</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for departamento in departamentos %}
+        <tr>
+            <td><a href="{% url 'list_departamentos' departamento.pk %}">{{ departamento.pk }}</a></td>
+            <td class="align-middle">{{ departamento.descricao }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+</table>
+{% endblock content %}

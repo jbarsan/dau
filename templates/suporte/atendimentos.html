@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Atendimentos</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <table class="table">
+        <thead class="thead-inverse bg-dark text-white">
+        <tr>
+            <th>Entrada</th>
+            <th>Técnico</th>
+            <th>Data Início</th>
+            <th>Data fim</th>
+            <th>Resumo</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for atendimento in atendimentos %}
+        <tr>
+            <td><a href="{% url 'list_atendimentos' atendimento.pk %}">{{ atendimento.pk }}</a></td>
+            <td class="align-middle">{{ .tecnico }}</td>
+            <td class="align-middle">{{ .data_inicio }}</td>
+            <td class="align-middle">{{ .data_fim }}</td>
+            <td class="align-middle">{{ .resumo }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+</table>
+{% endblock content %}

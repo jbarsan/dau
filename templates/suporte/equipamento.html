@@ -3,12 +3,12 @@
      Faz com que o título que foi configurado no arquivo base.html seja
      trazido para cá. -->
 {% block title %}
-    Entrada {{ get_entrada.pk }} - {{ block.super }}
+    Equipamento {{ get_equipamento.pk }} - {{ block.super }}
 {% endblock title %}
 
 {% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'entradas' %}">Entrada</a></li>
-    <li class="breadcrumb-item active">{{ get_entrada.pk }} </li>
+    <li class="breadcrumb-item"><a href="{% url 'equipamentos' %}">Equipamentos</a></li>
+    <li class="breadcrumb-item active">{{ get_equipamento.pk }} </li>
 {% endblock breadcrumb %}
 
 {% block content %}

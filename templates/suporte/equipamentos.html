@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Equipamentos</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+    <table class="table">
+        <thead class="thead-inverse bg-dark text-white">
+        <tr>
+            <th>Tombamento</th>
+            <th>Descrição</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Num. Série</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for equipamento in equipamentos %}
+        <tr>
+            <td><a href="{% url 'list_equipamentos' equipamento.pk %}">{{ equipamento.pk }}</a></td>
+            <td class="align-middle">{{ equipamento.descricao }}</td>
+            <td class="align-middle">{{ equipamento.marca }}</td>
+            <td class="align-middle">{{ equipamento.modelo }}</td>
+            <td class="align-middle">{{ equipamento.num_serie }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+</table>
+{% endblock content %}

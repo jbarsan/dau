@@ -1,40 +1,13 @@
-{% load static %}<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <title>Suporte 2.0</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-    <div class="container">
-        <ol class="breadcrumb my-4">
-            <li class="breadcrumb-item active">Suporte 2.0</li>
-        </ol>
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">Home</li>
+{% endblock breadcrumb %}
 
-        <table class="table">
-            <thead class="thead-inverse bg-dark text-white">
-                <tr>
-                    <th>Entrada</th>
-                    <th>Descrição</th>
-                    <th>Modelo</th>
-                    <th>Problemas</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for entrada in entradas %}
-                <tr>
-                    <td>
-                        <a href="{% url 'entradas' entrada.pk %}"> {{ entrada.pk }}</a>
-                        <small class="text-muted d-block">{{ entrada.equipamento.tombamento }}</small>
-                    </td>
-                    <td class="align-middle">{{ entrada.equipamento.descricao }}</td>
-                    <td class="align-middle">{{ entrada.equipamento.modelo }}</td>
-                    <td class="align-middle">{{ entrada.problemas }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-</body>
-</html>
+{% block content %}
+    <ul>
+        <li><a href="{% url 'equipamentos' %}">Equipamentos</a></li>
+        <li><a href="{% url 'entradas' %}">Entradas</a></li>
+        <li><a href="{% url 'departamentos' %}">Departamentos</a></li>
+    </ul>
+{% endblock content %}
